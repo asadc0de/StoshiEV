@@ -11,37 +11,26 @@ export default function SignIn() {
   const isAdminFlow = searchParams.get('from') === 'admin';
   const redirectPath = searchParams.get('redirect');
 
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
-
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
+  const handleChange = (e) =>
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     if (!formData.email || !formData.password) {
       setError('Please enter both email and password.');
       setLoading(false);
       return;
     }
-
     try {
       const userCredential = await signIn(formData.email, formData.password);
       const user = userCredential.user;
-
       if (redirectPath) {
         navigate(redirectPath);
       } else {
@@ -59,31 +48,24 @@ export default function SignIn() {
     }
   };
 
-  // Helper function to pre-fill developer testing accounts
   const fillTestCredentials = (role) => {
     if (role === 'admin') {
-      setFormData({
-        email: 'admin@stoshi.com',
-        password: 'adminpassword'
-      });
+      setFormData({ email: 'admin@stoshi.com', password: 'adminpassword' });
     } else {
-      setFormData({
-        email: 'user@stoshi.com',
-        password: 'userpassword'
-      });
+      setFormData({ email: 'user@stoshi.com', password: 'userpassword' });
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#042A1d] text-white flex flex-col justify-center items-center px-4 relative overflow-hidden font-inter">
-      {/* Background decoration */}
-      <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] bg-[#74E61F]/10 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
-      <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] bg-[#105D3D]/30 rounded-full blur-[120px] pointer-events-none"></div>
+    <div className="min-h-screen bg-[#F7FBF9] text-[#2D3748] flex flex-col justify-center items-center px-4 relative overflow-hidden font-inter">
+      {/* Subtle background blobs */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#D8F3DC] rounded-full blur-[100px] pointer-events-none opacity-60" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#B7E4C7] rounded-full blur-[100px] pointer-events-none opacity-40" />
 
       {/* Back to Home Link */}
       <Link
         to="/"
-        className="absolute top-6 left-6 flex items-center space-x-2 text-slate-400 hover:text-[#74E61F] transition-colors text-sm font-semibold z-10"
+        className="absolute top-6 left-6 flex items-center space-x-2 text-[#40916C] hover:text-[#1B4332] transition-colors text-sm font-semibold z-10"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Home</span>
@@ -93,15 +75,16 @@ export default function SignIn() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-md glassmorphism-dark rounded-[32px] p-8 md:p-10 shadow-2xl relative z-10 border border-white/10"
+        className="w-full max-w-md bg-white rounded-[32px] p-8 md:p-10 relative z-10 border border-[#B7E4C7]"
+        style={{ boxShadow: '0 8px 40px rgba(27,67,50,0.10)' }}
       >
         {/* Logo */}
         <div className="flex flex-col items-center mb-8 text-center">
           <img src="/stoshi_logo.webp" alt="Stoshi Logo" className="h-12 w-auto mb-4" />
-          <h2 className="text-2xl md:text-3xl font-extrabold font-sora text-[#74E61F] tracking-tight">
+          <h2 className="text-2xl md:text-3xl font-extrabold font-sora text-[#1B4332] tracking-tight">
             Welcome Back
           </h2>
-          <p className="text-slate-400 text-xs md:text-sm mt-1.5 font-medium">
+          <p className="text-[#40916C] text-xs md:text-sm mt-1.5 font-medium">
             Sign in to access your Green Energy Dashboard
           </p>
         </div>
@@ -110,7 +93,7 @@ export default function SignIn() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-200 text-xs font-semibold"
+            className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold"
           >
             {error}
           </motion.div>
@@ -119,16 +102,16 @@ export default function SignIn() {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Email */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-slate-400">Email Address</label>
+            <label className="text-xs font-bold uppercase tracking-wider text-[#1B4332]">Email Address</label>
             <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#40916C]" />
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="vijay.kumar@example.com"
-                className="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#0B3022]/60 border border-white/10 focus:border-[#74E61F] focus:outline-none text-sm font-medium transition-colors"
+                className="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#F7FBF9] border border-[#B7E4C7] focus:border-[#40916C] focus:outline-none text-sm font-medium text-[#2D3748] placeholder-[#B7E4C7] transition-colors"
                 required
               />
             </div>
@@ -136,24 +119,22 @@ export default function SignIn() {
 
           {/* Password */}
           <div className="space-y-1.5">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-400">Password</label>
-            </div>
+            <label className="text-xs font-bold uppercase tracking-wider text-[#1B4332]">Password</label>
             <div className="relative">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#40916C]" />
               <input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="••••••••"
-                className="w-full pl-11 pr-11 py-3 rounded-2xl bg-[#0B3022]/60 border border-white/10 focus:border-[#74E61F] focus:outline-none text-sm font-medium transition-colors"
+                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                className="w-full pl-11 pr-11 py-3 rounded-2xl bg-[#F7FBF9] border border-[#B7E4C7] focus:border-[#40916C] focus:outline-none text-sm font-medium text-[#2D3748] placeholder-[#B7E4C7] transition-colors"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#40916C] hover:text-[#1B4332] transition-colors"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -165,52 +146,53 @@ export default function SignIn() {
             whileTap={{ scale: 0.99 }}
             type="submit"
             disabled={loading}
-            className="w-full py-4 rounded-2xl bg-[#74E61F] text-[#042A1d] font-sora font-bold uppercase tracking-wider hover:bg-white hover:text-black transition-all duration-300 shadow-md cursor-pointer flex items-center justify-center space-x-2 text-xs md:text-sm"
+            className="w-full py-4 rounded-2xl bg-[#40916C] text-white font-sora font-bold uppercase tracking-wider hover:bg-[#1B4332] transition-all duration-300 cursor-pointer flex items-center justify-center space-x-2 text-xs md:text-sm disabled:opacity-60"
+            style={{ boxShadow: '0 4px 16px rgba(27,67,50,0.18)' }}
           >
             {loading ? (
-              <div className="w-5 h-5 border-2 border-[#042A1d] border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
             ) : (
               <span>Sign In</span>
             )}
           </motion.button>
         </form>
 
-        <div className="mt-8 text-center text-slate-400 text-xs md:text-sm font-medium">
-          Don't have an account yet?{" "}
-          <Link to={`/signup${redirectPath ? '?redirect=' + encodeURIComponent(redirectPath) : ''}`} className="text-[#74E61F] hover:underline font-bold">
+        <div className="mt-8 text-center text-[#2D3748] text-xs md:text-sm font-medium">
+          Don't have an account yet?{' '}
+          <Link to={`/signup${redirectPath ? '?redirect=' + encodeURIComponent(redirectPath) : ''}`} className="text-[#40916C] hover:text-[#1B4332] hover:underline font-bold">
             Sign Up
           </Link>
         </div>
 
         {/* Quick Test Accounts Banner */}
-        <div className="mt-8 pt-6 border-t border-white/10 text-center">
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">
+        <div className="mt-8 pt-6 border-t border-[#B7E4C7] text-center">
+          <p className="text-[10px] font-bold text-[#40916C] uppercase tracking-widest mb-3">
             Testing Shortcuts
           </p>
           <div className="flex justify-center space-x-3">
             <button
               onClick={() => fillTestCredentials('user')}
-              className="px-3 py-1.5 rounded-xl border border-white/10 hover:border-[#74E61F] text-[11px] font-bold transition-all bg-[#0B3022]/30 cursor-pointer text-slate-300"
+              className="px-3 py-1.5 rounded-xl border border-[#B7E4C7] hover:border-[#40916C] hover:bg-[#D8F3DC] text-[11px] font-bold transition-all bg-[#F7FBF9] cursor-pointer text-[#1B4332]"
             >
               Test User
             </button>
             {isAdminFlow && (
               <button
                 onClick={() => fillTestCredentials('admin')}
-                className="px-3 py-1.5 rounded-xl border border-white/10 hover:border-[#74E61F] text-[11px] font-bold transition-all bg-[#0B3022]/30 cursor-pointer text-[#74E61F]"
+                className="px-3 py-1.5 rounded-xl border border-[#40916C] bg-[#D8F3DC] hover:bg-[#B7E4C7] text-[11px] font-bold transition-all cursor-pointer text-[#1B4332]"
               >
                 Test Admin
               </button>
             )}
           </div>
           {isAdminFlow && (
-            <p className="text-[9px] text-slate-500 mt-2">
-              Tip: Registering an email like <span className="font-semibold text-slate-300">admin@stoshi.com</span> automatically grants admin status.
+            <p className="text-[9px] text-[#40916C] mt-2">
+              Tip: Registering an email like <span className="font-semibold text-[#1B4332]">admin@stoshi.com</span> automatically grants admin status.
             </p>
           )}
         </div>
-
       </motion.div>
     </div>
   );
 }
+

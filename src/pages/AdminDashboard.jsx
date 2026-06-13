@@ -114,7 +114,6 @@ export default function AdminDashboard() {
 
   const [activeTab, setActiveTab] = useState('analytics');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(true);
   const pageRef = useRef(null);
 
   const [usersList, setUsersList] = useState([]);
@@ -158,7 +157,7 @@ export default function AdminDashboard() {
 
   const [bulkActionStatus, setBulkActionStatus] = useState('');
 
-  // ─── EFFECTS ─────────────────────────────────────────────────────────
+  // â”€â”€â”€ EFFECTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   useEffect(() => {
     const unsubUsers = onSnapshot(collection(db, 'users'), (snapshot) => {
       setUsersList(snapshot.docs.map(d => ({ uid: d.id, ...d.data() })));
@@ -205,7 +204,7 @@ export default function AdminDashboard() {
     return () => { unsubUsers(); unsubProjects(); unsubDist(); unsubIncome(); unsubWaitlist(); unsubLogs(); };
   }, []);
 
-  // ─── COMPUTED STATS ──────────────────────────────────────────────────
+  // â”€â”€â”€ COMPUTED STATS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const totalUsers = usersList.length;
   const activeMembers = usersList.filter(u => u.membershipStatus === 'Active').length;
   const inactiveMembers = usersList.filter(u => u.membershipStatus !== 'Active').length;
@@ -223,7 +222,7 @@ export default function AdminDashboard() {
     { label: 'Platinum', value: platinumMembers }
   ];
 
-  // ─── FILTERED DATA ───────────────────────────────────────────────────
+  // â”€â”€â”€ FILTERED DATA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const filteredUsers = usersList.filter(u => {
     const matchesSearch = u.name?.toLowerCase().includes(userSearch.toLowerCase()) ||
       u.email?.toLowerCase().includes(userSearch.toLowerCase()) ||
@@ -239,7 +238,7 @@ export default function AdminDashboard() {
     p.plan?.toLowerCase().includes(paymentSearch.toLowerCase())
   );
 
-  // ─── HANDLERS: MEMBER MANAGEMENT ─────────────────────────────────────
+  // â”€â”€â”€ HANDLERS: MEMBER MANAGEMENT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleToggleAdmin = async (userId, currentRole) => {
     const newRole = currentRole === 'admin' ? 'user' : 'admin';
     try {
@@ -299,7 +298,7 @@ export default function AdminDashboard() {
     } catch (err) { alert('Error: ' + err.message); }
   };
 
-  // ─── HANDLERS: DISTRIBUTION SYSTEM ───────────────────────────────────
+  // â”€â”€â”€ HANDLERS: DISTRIBUTION SYSTEM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleGeneratePreview = () => {
     if (isDistLocked) return;
     const income = Number(distIncomeAmount);
@@ -380,7 +379,7 @@ export default function AdminDashboard() {
     finally { setDistLoading(false); }
   };
 
-  // ─── HANDLERS: COMPANY INCOME ────────────────────────────────────────
+  // â”€â”€â”€ HANDLERS: COMPANY INCOME â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleAddIncome = async (e) => {
     e.preventDefault();
     const amount = Number(incomeForm.amount);
@@ -393,7 +392,7 @@ export default function AdminDashboard() {
         enteredBy: currentUser.uid,
         enteredAt: serverTimestamp()
       });
-      await logActivity(currentUser?.uid, userData?.name, 'Add Company Income', `Added income ₹${amount}`);
+      await logActivity(currentUser?.uid, userData?.name, 'Add Company Income', `Added income â‚¹${amount}`);
       setIncomeForm({ amount: '', description: '' });
     } catch (err) { alert('Error: ' + err.message); }
     finally { setIncomeSubmitting(false); }
@@ -407,7 +406,7 @@ export default function AdminDashboard() {
     } catch (err) { alert('Error: ' + err.message); }
   };
 
-  // ─── HANDLERS: MEMBERSHIP CONTROLS ───────────────────────────────────
+  // â”€â”€â”€ HANDLERS: MEMBERSHIP CONTROLS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleBulkActivate = async () => {
     if (!window.confirm('Activate ALL pending members?')) return;
     setBulkActionStatus('Processing...');
@@ -456,7 +455,7 @@ export default function AdminDashboard() {
     } catch (err) { alert('Error: ' + err.message); }
   };
 
-  // ─── HANDLERS: PROJECTS CRUD ──────────────────────────────────────────
+  // â”€â”€â”€ HANDLERS: PROJECTS CRUD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleProjectSubmit = async (e) => {
     e.preventDefault();
     setProjectStatus({ success: false, error: '' });
@@ -544,7 +543,7 @@ export default function AdminDashboard() {
     } catch (err) { alert('Error: ' + err.message); }
   };
 
-  // ─── HANDLERS: WAITLIST ──────────────────────────────────────────────
+  // â”€â”€â”€ HANDLERS: WAITLIST â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleAddToWaitlist = async (e) => {
     e.preventDefault();
     if (!waitlistForm.name || !waitlistForm.email) { alert('Name and email required.'); return; }
@@ -574,7 +573,7 @@ export default function AdminDashboard() {
     } catch (err) { alert('Error: ' + err.message); }
   };
 
-  // ─── HANDLERS: EXPORT ────────────────────────────────────────────────
+  // â”€â”€â”€ HANDLERS: EXPORT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleExportPayments = () => {
     exportToCSV(
       paymentsList.map(p => ({ Name: p.userName, Email: p.userEmail, Plan: p.plan, Amount: p.amount, TransactionID: p.transactionId, Status: p.status, Date: new Date(p.date).toLocaleDateString('en-IN') })),
@@ -610,7 +609,7 @@ export default function AdminDashboard() {
     );
   };
 
-  // ─── HANDLERS: AUTH ──────────────────────────────────────────────────
+  // â”€â”€â”€ HANDLERS: AUTH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleLogout = async () => {
     try {
       await signOut();
@@ -618,7 +617,7 @@ export default function AdminDashboard() {
     } catch (err) { console.error(err); }
   };
 
-  // ─── SIDEBAR ITEMS ───────────────────────────────────────────────────
+  // â”€â”€â”€ SIDEBAR ITEMS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const sidebarMenuItems = [
     { id: 'analytics', name: 'Overview', icon: LayoutDashboard },
     { id: 'users', name: 'Members', icon: Users },
@@ -632,39 +631,41 @@ export default function AdminDashboard() {
     { id: 'logs', name: 'Activity Logs', icon: Activity }
   ];
 
-  const bg = darkMode ? 'bg-[#021811]' : 'bg-slate-100';
-  const cardBg = darkMode ? 'bg-[#042118]/80' : 'bg-white';
-  const cardBorder = darkMode ? 'border-white/5' : 'border-slate-200';
-  const textPrimary = darkMode ? 'text-white' : 'text-slate-800';
-  const textSecondary = darkMode ? 'text-slate-400' : 'text-slate-500';
-  const inputBg = darkMode ? 'bg-[#0B3022]/60' : 'bg-slate-100';
+  const bg = 'bg-[#F7FBF9]';
+  const cardBg = 'bg-white';
+  const cardBorder = 'border-[#B7E4C7]';
+  const textPrimary = 'text-[#1B4332]';
+  const textSecondary = 'text-[#40916C]';
+  const inputBg = 'bg-[#F7FBF9]';
+  // Light mode is always on â€” darkMode kept as false so existing ternaries resolve correctly
+  const darkMode = false;
 
   return (
     <div ref={pageRef} className={`min-h-screen ${bg} ${textPrimary} flex font-inter relative transition-colors duration-300`}>
-      <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#74E61F]/5 rounded-full blur-[150px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-[20%] w-[50%] h-[50%] bg-[#105D3D]/10 rounded-full blur-[150px] pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#D8F3DC] rounded-full blur-[150px] pointer-events-none opacity-50" />
+      <div className="absolute bottom-0 left-[20%] w-[50%] h-[50%] bg-[#B7E4C7] rounded-full blur-[150px] pointer-events-none opacity-30" />
 
       <div className="lg:hidden fixed top-4 right-4 z-50">
         <button onClick={() => setSidebarOpen(!sidebarOpen)}
-          className={`p-3 ${darkMode ? 'bg-[#042A1d] border-white/10' : 'bg-white border-slate-200'} border rounded-2xl text-[#74E61F] cursor-pointer shadow-lg`}>
+          className="p-3 bg-white border border-[#B7E4C7] rounded-2xl text-[#40916C] cursor-pointer" style={{ boxShadow: '0 2px 12px rgba(27,67,50,0.10)' }}>
           {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
-      <aside className={`fixed inset-y-0 left-0 z-40 w-72 ${darkMode ? 'bg-[#041E15]/95 border-white/5' : 'bg-white border-slate-200'} backdrop-blur-md border-r p-6 flex flex-col justify-between transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed inset-y-0 left-0 z-40 w-72 bg-[#D8F3DC] border-r border-[#B7E4C7] p-6 flex flex-col justify-between transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="space-y-8">
           <Link to="/" className="flex items-center space-x-3">
             <img src="/stoshi_logo.webp" alt="Stoshi" className="h-12 w-auto" />
             <div>
-              <span className="text-[10px] font-extrabold text-[#74E61F] tracking-widest block uppercase">Admin Portal</span>
+              <span className="text-[10px] font-extrabold text-[#40916C] tracking-widest block uppercase">Admin Portal</span>
             </div>
           </Link>
 
-          <div className={`flex items-center space-x-3 p-4 rounded-2xl border ${darkMode ? 'bg-red-500/5 border-red-500/10' : 'bg-red-50 border-red-200'}`}>
-            <div className="w-10 h-10 rounded-full bg-red-500/10 text-red-400 flex items-center justify-center font-bold text-sm shadow-inner">AD</div>
+          <div className="flex items-center space-x-3 p-4 rounded-2xl border bg-white border-[#B7E4C7]" style={{ boxShadow: '0 2px 8px rgba(27,67,50,0.06)' }}>
+            <div className="w-10 h-10 rounded-full bg-[#40916C] text-white flex items-center justify-center font-bold text-sm shadow-inner">AD</div>
             <div>
-              <span className={`text-xs font-bold block truncate ${darkMode ? 'text-white' : 'text-slate-800'}`}>{userData?.name || 'Administrator'}</span>
-              <span className="px-2 py-0.5 mt-1 rounded text-[8px] font-extrabold font-sora uppercase border bg-red-500/10 text-red-400 border-red-500/20 inline-block">Systems Admin</span>
+              <span className="text-xs font-bold block truncate text-[#1B4332]">{userData?.name || 'Administrator'}</span>
+              <span className="px-2 py-0.5 mt-1 rounded text-[8px] font-extrabold font-sora uppercase border bg-[#D8F3DC] text-[#1B4332] border-[#B7E4C7] inline-block">Systems Admin</span>
             </div>
           </div>
 
@@ -674,7 +675,11 @@ export default function AdminDashboard() {
               const isActive = activeTab === item.id;
               return (
                 <button key={item.id} onClick={() => { setActiveTab(item.id); setSidebarOpen(false); }}
-                  className={`w-full px-4 py-3 rounded-2xl flex items-center space-x-3.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${isActive ? 'bg-[#74E61F]/15 border border-[#74E61F]/20 text-[#74E61F] font-extrabold' : `${darkMode ? 'text-slate-400 hover:text-white hover:bg-[#07241A]/50' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'} border border-transparent`}`}>
+                  className={`w-full px-4 py-3 rounded-2xl flex items-center space-x-3.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
+                    isActive
+                      ? 'bg-[#1B4332] text-white border border-[#1B4332]'
+                      : 'text-[#40916C] hover:text-[#1B4332] hover:bg-[#B7E4C7] border border-transparent'
+                  }`}>
                   <Icon className="w-4 h-4" />
                   <span>{item.name}</span>
                 </button>
@@ -684,18 +689,13 @@ export default function AdminDashboard() {
         </div>
 
         <div className="space-y-3">
-          <button onClick={() => setDarkMode(!darkMode)}
-            className={`w-full px-4 py-3 border ${darkMode ? 'border-white/5 text-slate-400 hover:text-white' : 'border-slate-200 text-slate-500 hover:text-slate-800'} rounded-2xl flex items-center justify-center space-x-2 text-xs font-bold uppercase tracking-wider transition-all`}>
-            {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
-          </button>
           <Link to="/"
-            className={`w-full px-4 py-3 border ${darkMode ? 'border-white/5 text-slate-400 hover:text-white' : 'border-slate-200 text-slate-500 hover:text-slate-800'} rounded-2xl flex items-center justify-center space-x-2 text-xs font-bold uppercase tracking-wider transition-all`}>
+            className="w-full px-4 py-3 border border-[#B7E4C7] text-[#40916C] hover:text-[#1B4332] hover:bg-[#B7E4C7] rounded-2xl flex items-center justify-center space-x-2 text-xs font-bold uppercase tracking-wider transition-all">
             <ArrowLeft className="w-4 h-4" />
             <span>Go to Landing Page</span>
           </Link>
           <button onClick={handleLogout}
-            className="w-full px-4 py-3 bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 hover:text-white rounded-2xl flex items-center space-x-3.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
+            className="w-full px-4 py-3 bg-red-50 border border-red-200 text-red-600 hover:bg-red-100 rounded-2xl flex items-center space-x-3.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
             <LogOut className="w-4 h-4" />
             <span>Logout</span>
           </button>
@@ -723,7 +723,7 @@ export default function AdminDashboard() {
                 finally { setLoadingData(false); }
               }; f();
             }}
-              className={`p-3 ${darkMode ? 'bg-[#0B2C21] border-white/5 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-600'} hover:bg-[#74E61F] hover:text-[#042A1d] transition-all rounded-2xl border cursor-pointer`}
+              className="p-3 bg-[#F7FBF9] border border-[#B7E4C7] text-[#40916C] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all rounded-2xl cursor-pointer"
               title="Refresh data">
               <RefreshCw className={`w-4 h-4 ${loadingData ? 'animate-spin text-[#74E61F]' : ''}`} />
             </button>
@@ -733,7 +733,7 @@ export default function AdminDashboard() {
         <AnimatePresence mode="wait">
           <motion.div key={activeTab} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.3 }} className="space-y-8">
 
-            {/* ════════════════ OVERVIEW / ANALYTICS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• OVERVIEW / ANALYTICS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'analytics' && (
               <div className="space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -744,7 +744,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <StatCard icon={<Award className="w-5 h-5" />} label="Silver Members" value={silverMembers} color="text-slate-300" bgColor="bg-slate-500/10" borderColor="border-slate-500/10" />
+                  <StatCard icon={<Award className="w-5 h-5" />} label="Silver Members" value={silverMembers} color="text-[#2D3748]" bgColor="bg-slate-500/10" borderColor="border-slate-500/10" />
                   <StatCard icon={<Award className="w-5 h-5" />} label="Gold Members" value={goldMembers} color="text-amber-400" bgColor="bg-amber-500/10" borderColor="border-amber-500/10" />
                   <StatCard icon={<Award className="w-5 h-5" />} label="Platinum Members" value={platinumMembers} color="text-purple-400" bgColor="bg-purple-500/10" borderColor="border-purple-500/10" />
                   <StatCard icon={<TrendingUp className="w-5 h-5" />} label="Company Income" value={formatRupee(totalCompanyIncome)} color="text-cyan-400" bgColor="bg-cyan-500/10" borderColor="border-cyan-500/10" />
@@ -777,10 +777,10 @@ export default function AdminDashboard() {
                   <h3 className={`text-sm font-bold font-sora ${textPrimary} uppercase tracking-wider`}>Latest Activity</h3>
                   <div className="space-y-2 max-h-[200px] overflow-y-auto pr-1">
                     {activityLogs.slice(0, 5).map((log, i) => (
-                      <div key={log.id || i} className={`p-3 ${darkMode ? 'bg-[#0B2C21]/60' : 'bg-slate-50'} rounded-xl border ${cardBorder} flex justify-between items-center text-xs`}>
+                      <div key={log.id || i} className={`p-3 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} rounded-xl border ${cardBorder} flex justify-between items-center text-xs`}>
                         <div>
                           <span className={`font-bold block ${textPrimary}`}>{log.action}</span>
-                          <span className={`text-[10px] font-semibold ${textSecondary}`}>{log.details || ''} — {log.userName}</span>
+                          <span className={`text-[10px] font-semibold ${textSecondary}`}>{log.details || ''} â€” {log.userName}</span>
                         </div>
                         <span className={`text-[10px] ${textSecondary}`}>
                           {log.timestamp?.toDate ? new Date(log.timestamp.toDate()).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : ''}
@@ -793,7 +793,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* ════════════════ MEMBERS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• MEMBERS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'users' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-6`}>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -816,13 +816,13 @@ export default function AdminDashboard() {
                       <option value="Platinum">Platinum</option>
                     </select>
                     <button onClick={handleExportUsers}
-                      className={`px-4 py-2.5 rounded-2xl ${darkMode ? 'bg-[#0B2C21] border-white/5 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-600'} border hover:bg-[#74E61F] hover:text-[#042A1d] transition-all text-xs font-bold uppercase cursor-pointer flex items-center gap-2`}>
+                      className={`px-4 py-2.5 rounded-2xl ${darkMode ? 'bg-[#F7FBF9] border-[#B7E4C7] text-[#2D3748]' : 'bg-slate-100 border-slate-200 text-slate-600'} border hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all text-xs font-bold uppercase cursor-pointer flex items-center gap-2`}>
                       <Download className="w-3.5 h-3.5" /> Export
                     </button>
                   </div>
                 </div>
 
-                <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#031F15]/30' : 'bg-white'}">
+                <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#F7FBF9]' : 'bg-white'}">
                   <table className="w-full text-left border-collapse">
                     <thead>
                       <tr className={`border-b ${cardBorder} text-[9px] font-extrabold uppercase ${textSecondary} tracking-wider`}>
@@ -837,7 +837,7 @@ export default function AdminDashboard() {
                     </thead>
                     <tbody className="divide-y ${cardBorder} text-xs font-medium">
                       {filteredUsers.map((user) => (
-                        <tr key={user.uid} className={`${darkMode ? 'hover:bg-white/5 text-slate-300' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
+                        <tr key={user.uid} className={`${darkMode ? 'hover:bg-white/5 text-[#2D3748]' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
                           <td className="p-4">
                             <span className={`font-bold block ${textPrimary}`}>{user.name}</span>
                             <span className={`text-[10px] block font-semibold ${textSecondary}`}>{user.email}</span>
@@ -856,7 +856,7 @@ export default function AdminDashboard() {
                           <td className="p-4">
                             <div className="flex justify-center items-center space-x-1.5 flex-wrap gap-1">
                               <button onClick={() => handleEditUserClick(user)}
-                                className="p-2 bg-[#0B2C21] hover:bg-[#74E61F] hover:text-[#042A1d] transition-all rounded-xl border border-white/5 text-slate-300 cursor-pointer" title="Edit">
+                                className="p-2 bg-[#F7FBF9] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all rounded-xl border border-[#B7E4C7] text-[#2D3748] cursor-pointer" title="Edit">
                                 <Edit className="w-3.5 h-3.5" />
                               </button>
                               {user.membershipStatus !== 'Active' && user.paymentStatus === 'Paid' && (
@@ -872,20 +872,20 @@ export default function AdminDashboard() {
                                 </button>
                               )}
                               <div className="relative group">
-                                <button className="p-2 bg-[#0B2C21] hover:bg-[#74E61F] hover:text-[#042A1d] transition-all rounded-xl border border-white/5 text-slate-300 cursor-pointer" title="Change Package">
+                                <button className="p-2 bg-[#F7FBF9] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all rounded-xl border border-[#B7E4C7] text-[#2D3748] cursor-pointer" title="Change Package">
                                   <Award className="w-3.5 h-3.5" />
                                 </button>
-                                <div className="absolute right-0 top-full mt-1 bg-[#042118] border border-white/10 rounded-xl shadow-xl z-50 hidden group-hover:block min-w-[130px]">
+                                <div className="absolute right-0 top-full mt-1 bg-white border border-[#B7E4C7] rounded-xl shadow-xl z-50 hidden group-hover:block min-w-[130px]">
                                   {['Silver', 'Gold', 'Platinum'].map(pkg => (
                                     <button key={pkg} onClick={() => handleChangePackage(user.uid, pkg)}
-                                      className="block w-full text-left px-4 py-2 text-xs text-slate-300 hover:text-white hover:bg-white/5 transition first:rounded-t-xl last:rounded-b-xl cursor-pointer">
+                                      className="block w-full text-left px-4 py-2 text-xs text-[#2D3748] hover:text-white hover:bg-white/5 transition first:rounded-t-xl last:rounded-b-xl cursor-pointer">
                                       {pkg}
                                     </button>
                                   ))}
                                 </div>
                               </div>
                               <button onClick={() => handleToggleAdmin(user.uid, user.role)}
-                                className="p-2 bg-[#0B2C21] hover:bg-[#74E61F] hover:text-[#042A1d] transition-all rounded-xl border border-white/5 text-slate-300 cursor-pointer" title="Toggle Role">
+                                className="p-2 bg-[#F7FBF9] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all rounded-xl border border-[#B7E4C7] text-[#2D3748] cursor-pointer" title="Toggle Role">
                                 <Shield className="w-3.5 h-3.5" />
                               </button>
                               <button onClick={() => handleDeleteUser(user.uid)}
@@ -932,7 +932,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* ════════════════ PAYMENTS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PAYMENTS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'payments' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-6`}>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -948,13 +948,13 @@ export default function AdminDashboard() {
                         className={`w-full pl-11 pr-4 py-2.5 rounded-2xl ${inputBg} border ${cardBorder} focus:border-[#74E61F] focus:outline-none text-xs font-semibold text-white transition-colors`} />
                     </div>
                     <button onClick={handleExportPayments}
-                      className="px-4 py-2.5 rounded-2xl bg-[#0B2C21] border border-white/5 text-slate-300 hover:bg-[#74E61F] hover:text-[#042A1d] transition-all text-xs font-bold uppercase cursor-pointer flex items-center gap-2">
+                      className="px-4 py-2.5 rounded-2xl bg-[#F7FBF9] border border-[#B7E4C7] text-[#2D3748] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all text-xs font-bold uppercase cursor-pointer flex items-center gap-2">
                       <Download className="w-3.5 h-3.5" /> Export CSV
                     </button>
                   </div>
                 </div>
 
-                <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#031F15]/30' : 'bg-white'}">
+                <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#F7FBF9]' : 'bg-white'}">
                   <table className="w-full text-left border-collapse">
                     <thead>
                       <tr className={`border-b ${cardBorder} text-[9px] font-extrabold uppercase ${textSecondary} tracking-wider`}>
@@ -968,7 +968,7 @@ export default function AdminDashboard() {
                     </thead>
                     <tbody className="divide-y ${cardBorder} text-xs font-medium">
                       {filteredPayments.map((tx) => (
-                        <tr key={tx.id} className={`${darkMode ? 'hover:bg-white/5 text-slate-300' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
+                        <tr key={tx.id} className={`${darkMode ? 'hover:bg-white/5 text-[#2D3748]' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
                           <td className="p-4 font-mono font-bold uppercase ${textPrimary}">{tx.transactionId}</td>
                           <td className="p-4">
                             <span className={`font-bold block ${textPrimary}`}>{tx.userName}</span>
@@ -993,7 +993,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* ════════════════ COMPANY EARNINGS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPANY EARNINGS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'earnings' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-6`}>
                 <div>
@@ -1001,11 +1001,11 @@ export default function AdminDashboard() {
                   <p className={`text-xs mt-1 ${textSecondary}`}>Manually enter and track company income</p>
                 </div>
 
-                <form onSubmit={handleAddIncome} className={`p-6 ${darkMode ? 'bg-[#0B2C21]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-4`}>
+                <form onSubmit={handleAddIncome} className={`p-6 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-4`}>
                   <h4 className={`text-sm font-bold font-sora ${textPrimary} uppercase tracking-wider`}>Add Company Income</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className={`text-[10px] font-bold uppercase ${textSecondary} block mb-2`}>Amount (₹)</label>
+                      <label className={`text-[10px] font-bold uppercase ${textSecondary} block mb-2`}>Amount (â‚¹)</label>
                       <input type="number" value={incomeForm.amount} onChange={(e) => setIncomeForm({...incomeForm, amount: e.target.value})}
                         placeholder="e.g. 500000"
                         className={`w-full px-4 py-3 rounded-xl ${inputBg} border ${cardBorder} focus:border-[#74E61F] focus:outline-none text-xs font-bold text-white transition-colors`} required />
@@ -1023,7 +1023,7 @@ export default function AdminDashboard() {
                   </button>
                 </form>
 
-                <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#031F15]/30' : 'bg-white'}">
+                <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#F7FBF9]' : 'bg-white'}">
                   <table className="w-full text-left border-collapse">
                     <thead>
                       <tr className={`border-b ${cardBorder} text-[9px] font-extrabold uppercase ${textSecondary} tracking-wider`}>
@@ -1036,12 +1036,12 @@ export default function AdminDashboard() {
                     </thead>
                     <tbody className="divide-y ${cardBorder} text-xs font-medium">
                       {companyIncomeList.map((inc) => (
-                        <tr key={inc.id} className={`${darkMode ? 'hover:bg-white/5 text-slate-300' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
+                        <tr key={inc.id} className={`${darkMode ? 'hover:bg-white/5 text-[#2D3748]' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
                           <td className={`p-4 ${textSecondary}`}>
                             {inc.enteredAt?.toDate ? new Date(inc.enteredAt.toDate()).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'N/A'}
                           </td>
                           <td className="p-4 text-right text-[#74E61F] font-sora font-bold">{formatRupee(inc.amount)}</td>
-                          <td className="p-4">{inc.description || '—'}</td>
+                          <td className="p-4">{inc.description || 'â€”'}</td>
                           <td className={`p-4 ${textSecondary}`}>{inc.enteredBy?.slice(0, 8) || 'N/A'}...</td>
                           <td className="p-4 text-center">
                             <button onClick={() => handleDeleteIncome(inc.id)}
@@ -1058,14 +1058,14 @@ export default function AdminDashboard() {
                   </table>
                 </div>
 
-                <div className={`p-4 ${darkMode ? 'bg-[#0B2C21]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl flex justify-between items-center`}>
+                <div className={`p-4 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl flex justify-between items-center`}>
                   <span className={`text-xs font-bold uppercase ${textSecondary}`}>Total Company Income</span>
                   <span className="text-lg font-bold text-[#74E61F] font-sora">{formatRupee(totalCompanyIncome)}</span>
                 </div>
               </div>
             )}
 
-            {/* ════════════════ DISTRIBUTION ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• DISTRIBUTION â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'distribution' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-8`}>
                 <div>
@@ -1073,7 +1073,7 @@ export default function AdminDashboard() {
                   <p className={`text-xs mt-1 ${textSecondary}`}>Calculate, preview, and lock earnings distributions (ONE TIME ONLY)</p>
                 </div>
 
-                <div className={`p-6 ${darkMode ? 'bg-[#0B2C21]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl`}>
+                <div className={`p-6 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl`}>
                   {distStep === 1 && (
                     <div className="space-y-4">
                       <h4 className={`text-sm font-bold ${textPrimary} uppercase tracking-wider`}>Step 1: Enter Income</h4>
@@ -1084,7 +1084,7 @@ export default function AdminDashboard() {
                         </div>
                       )}
                       <div>
-                        <label className={`text-[10px] font-bold uppercase ${textSecondary} block mb-2`}>Company Income Amount (₹)</label>
+                        <label className={`text-[10px] font-bold uppercase ${textSecondary} block mb-2`}>Company Income Amount (â‚¹)</label>
                         <input type="number" value={distIncomeAmount} onChange={(e) => setDistIncomeAmount(e.target.value)}
                           disabled={isDistLocked} placeholder="e.g. 500000"
                           className={`w-full max-w-md px-4 py-3 rounded-xl ${inputBg} border ${cardBorder} focus:border-[#74E61F] focus:outline-none text-xs font-bold text-white transition-colors disabled:opacity-50`} />
@@ -1104,7 +1104,7 @@ export default function AdminDashboard() {
                         <PoolCard label="Gold Pool (1%)" pool={distPreview.goldPool} count={distPreview.goldCount} share={distPreview.goldShare} />
                         <PoolCard label="Platinum Pool (2%)" pool={distPreview.platinumPool} count={distPreview.platinumCount} share={distPreview.platinumShare} />
                       </div>
-                      <div className={`flex justify-between items-center ${darkMode ? 'bg-[#042118]' : 'bg-slate-100'} p-4 rounded-xl border ${cardBorder}`}>
+                      <div className={`flex justify-between items-center ${darkMode ? 'bg-white' : 'bg-slate-100'} p-4 rounded-xl border ${cardBorder}`}>
                         <span className={`text-xs ${textSecondary} font-bold uppercase`}>Total Distributing</span>
                         <span className="text-lg font-bold text-emerald-400">{formatRupee(distPreview.totalDistributed)}</span>
                       </div>
@@ -1151,11 +1151,11 @@ export default function AdminDashboard() {
                   <h4 className={`text-sm font-bold font-sora ${textPrimary} uppercase tracking-wider`}>Distribution Records</h4>
                   <div className="flex gap-3">
                     <button onClick={handleExportDistributions}
-                      className="px-4 py-2 rounded-2xl bg-[#0B2C21] border border-white/5 text-slate-300 hover:bg-[#74E61F] hover:text-[#042A1d] transition-all text-xs font-bold uppercase cursor-pointer flex items-center gap-2">
+                      className="px-4 py-2 rounded-2xl bg-[#F7FBF9] border border-[#B7E4C7] text-[#2D3748] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all text-xs font-bold uppercase cursor-pointer flex items-center gap-2">
                       <Download className="w-3.5 h-3.5" /> Export CSV
                     </button>
                   </div>
-                  <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#031F15]/30' : 'bg-white'}">
+                  <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#F7FBF9]' : 'bg-white'}">
                     <table className="w-full text-left border-collapse">
                       <thead>
                         <tr className={`border-b ${cardBorder} text-[9px] font-extrabold uppercase ${textSecondary} tracking-wider`}>
@@ -1169,7 +1169,7 @@ export default function AdminDashboard() {
                       </thead>
                       <tbody className="divide-y ${cardBorder} text-xs font-medium">
                         {distributionsList.map((dist) => (
-                          <tr key={dist.id} className={`${darkMode ? 'hover:bg-white/5 text-slate-300' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
+                          <tr key={dist.id} className={`${darkMode ? 'hover:bg-white/5 text-[#2D3748]' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
                             <td className={`p-4 ${textSecondary}`}>
                               {dist.distributedAt?.toDate ? new Date(dist.distributedAt.toDate()).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'N/A'}
                             </td>
@@ -1192,7 +1192,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* ════════════════ MEMBERSHIP CONTROLS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• MEMBERSHIP CONTROLS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'membership' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-6`}>
                 <div>
@@ -1231,10 +1231,10 @@ export default function AdminDashboard() {
                   />
                 </div>
 
-                <div className={`p-6 ${darkMode ? 'bg-[#0B2C21]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-4`}>
+                <div className={`p-6 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-4`}>
                   <h4 className={`text-sm font-bold font-sora ${textPrimary} uppercase tracking-wider`}>Member Statistics</h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <StatBadge label="Total" value={totalUsers} color="text-white" />
+                    <StatBadge label="Total" value={totalUsers} color="text-[#1B4332]" />
                     <StatBadge label="Active" value={activeMembers} color="text-emerald-400" />
                     <StatBadge label="Pending" value={inactiveMembers} color="text-amber-400" />
                     <StatBadge label="Unpaid Active" value={usersList.filter(u => u.membershipStatus === 'Active' && u.paymentStatus !== 'Paid').length} color="text-red-400" />
@@ -1243,7 +1243,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* ════════════════ PROJECTS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PROJECTS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'projects' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-6`}>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -1271,7 +1271,7 @@ export default function AdminDashboard() {
                     const col = Number(project.collectedAmount) || 0;
                     const pct = cap > 0 ? Math.min(Math.round((col / cap) * 100), 100) : 0;
                     return (
-                      <div key={project.id} className={`p-6 ${darkMode ? 'bg-[#0B2C21]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-4 relative overflow-hidden`}>
+                      <div key={project.id} className={`p-6 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-4 relative overflow-hidden`}>
                         {project.isActive && (
                           <div className="absolute top-3 right-3 px-2 py-0.5 bg-[#74E61F]/15 text-[#74E61F] text-[8px] font-black uppercase rounded-lg tracking-wider border border-[#74E61F]/20">
                             Active
@@ -1279,7 +1279,7 @@ export default function AdminDashboard() {
                         )}
                         <div className="flex items-start justify-between">
                           <div className="flex items-center gap-3">
-                            <div className={`w-10 h-10 rounded-xl ${darkMode ? 'bg-[#042118]' : 'bg-white'} border ${cardBorder} flex items-center justify-center text-[#74E61F]`}>
+                            <div className={`w-10 h-10 rounded-xl ${darkMode ? 'bg-white' : 'bg-white'} border ${cardBorder} flex items-center justify-center text-[#74E61F]`}>
                               <Building2 className="w-5 h-5" />
                             </div>
                             <div>
@@ -1314,17 +1314,17 @@ export default function AdminDashboard() {
 
                         {(project.powerRating || project.chargingBays || project.dailyUsers || project.co2Saved) && (
                           <div className="grid grid-cols-2 gap-2 text-[10px]">
-                            {project.powerRating && <span className={textSecondary}>⚡ {project.powerRating}</span>}
-                            {project.chargingBays && <span className={textSecondary}>🔌 {project.chargingBays}</span>}
-                            {project.dailyUsers && <span className={textSecondary}>👤 {project.dailyUsers}</span>}
-                            {project.co2Saved && <span className={textSecondary}>🌿 {project.co2Saved}</span>}
+                            {project.powerRating && <span className={textSecondary}>âš¡ {project.powerRating}</span>}
+                            {project.chargingBays && <span className={textSecondary}>ðŸ”Œ {project.chargingBays}</span>}
+                            {project.dailyUsers && <span className={textSecondary}>ðŸ‘¤ {project.dailyUsers}</span>}
+                            {project.co2Saved && <span className={textSecondary}>ðŸŒ¿ {project.co2Saved}</span>}
                           </div>
                         )}
                         {(project.silverPrice || project.goldPrice || project.platinumPrice) && (
                           <div className="flex gap-2 text-[9px] font-bold">
-                            {project.silverPrice > 0 && <span className="px-2 py-0.5 rounded bg-slate-500/10 text-slate-300">Silver ₹{Number(project.silverPrice).toLocaleString('en-IN')}</span>}
-                            {project.goldPrice > 0 && <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-300">Gold ₹{Number(project.goldPrice).toLocaleString('en-IN')}</span>}
-                            {project.platinumPrice > 0 && <span className="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300">Platinum ₹{Number(project.platinumPrice).toLocaleString('en-IN')}</span>}
+                            {project.silverPrice > 0 && <span className="px-2 py-0.5 rounded bg-slate-500/10 text-[#2D3748]">Silver â‚¹{Number(project.silverPrice).toLocaleString('en-IN')}</span>}
+                            {project.goldPrice > 0 && <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-300">Gold â‚¹{Number(project.goldPrice).toLocaleString('en-IN')}</span>}
+                            {project.platinumPrice > 0 && <span className="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300">Platinum â‚¹{Number(project.platinumPrice).toLocaleString('en-IN')}</span>}
                           </div>
                         )}
                         {project.description && (
@@ -1333,7 +1333,7 @@ export default function AdminDashboard() {
 
                         <div className="flex items-center gap-2 pt-2 border-t ${cardBorder}">
                           <button onClick={() => handleEditProject(project)}
-                            className="flex-1 py-2 rounded-xl bg-[#0B2C21] border border-white/5 text-slate-300 hover:bg-[#74E61F] hover:text-[#042A1d] transition-all text-[10px] font-bold uppercase cursor-pointer flex items-center justify-center gap-1.5">
+                            className="flex-1 py-2 rounded-xl bg-[#F7FBF9] border border-[#B7E4C7] text-[#2D3748] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all text-[10px] font-bold uppercase cursor-pointer flex items-center justify-center gap-1.5">
                             <Edit className="w-3 h-3" /> Edit
                           </button>
                           {!project.isActive && (
@@ -1373,15 +1373,15 @@ export default function AdminDashboard() {
                           <InputField label="Location" value={projectForm.location} onChange={(e) => setProjectForm({...projectForm, location: e.target.value})} inputBg={inputBg} darkMode={darkMode} required />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
-                          <InputField label="Total Goal (₹)" type="number" value={projectForm.totalCapacity} onChange={(e) => setProjectForm({...projectForm, totalCapacity: e.target.value})} inputBg={inputBg} darkMode={darkMode} required />
-                          <InputField label="Collected (₹)" type="number" value={projectForm.collectedAmount} onChange={(e) => setProjectForm({...projectForm, collectedAmount: e.target.value})} inputBg={inputBg} darkMode={darkMode} required />
+                          <InputField label="Total Goal (â‚¹)" type="number" value={projectForm.totalCapacity} onChange={(e) => setProjectForm({...projectForm, totalCapacity: e.target.value})} inputBg={inputBg} darkMode={darkMode} required />
+                          <InputField label="Collected (â‚¹)" type="number" value={projectForm.collectedAmount} onChange={(e) => setProjectForm({...projectForm, collectedAmount: e.target.value})} inputBg={inputBg} darkMode={darkMode} required />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <InputField label="Total Members" type="number" value={projectForm.totalMembers} onChange={(e) => setProjectForm({...projectForm, totalMembers: e.target.value})} inputBg={inputBg} darkMode={darkMode} required />
                           <div className="space-y-1">
                             <label className={`text-[10px] font-bold uppercase ${textSecondary} block`}>Status</label>
                             <select value={projectForm.status} onChange={(e) => setProjectForm({...projectForm, status: e.target.value})}
-                              className={`w-full px-3.5 py-2.5 rounded-xl ${inputBg} border ${darkMode ? 'border-white/10' : 'border-slate-200'} text-xs font-semibold text-white focus:outline-none focus:border-[#74E61F]`}>
+                              className={`w-full px-3.5 py-2.5 rounded-xl ${inputBg} border ${darkMode ? 'border-[#B7E4C7]' : 'border-slate-200'} text-xs font-semibold text-white focus:outline-none focus:border-[#74E61F]`}>
                               <option value="Planning">Planning</option>
                               <option value="In Progress">In Progress</option>
                               <option value="Operational">Operational</option>
@@ -1391,19 +1391,19 @@ export default function AdminDashboard() {
                         </div>
 
                         {/* Specs Section */}
-                        <div className={`p-4 ${darkMode ? 'bg-[#0B2C21]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-3`}>
+                        <div className={`p-4 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-3`}>
                           <span className={`text-[9px] font-bold uppercase tracking-wider ${textSecondary}`}>Project Specifications</span>
                           <div className="grid grid-cols-2 gap-3">
                             <InputField label="Power Rating (e.g. 120 kW)" value={projectForm.powerRating} onChange={(e) => setProjectForm({...projectForm, powerRating: e.target.value})} inputBg={inputBg} darkMode={darkMode} />
                             <InputField label="Charging Bays (e.g. 8 Ports)" value={projectForm.chargingBays} onChange={(e) => setProjectForm({...projectForm, chargingBays: e.target.value})} inputBg={inputBg} darkMode={darkMode} />
                             <InputField label="Daily Users (e.g. 120+)" value={projectForm.dailyUsers} onChange={(e) => setProjectForm({...projectForm, dailyUsers: e.target.value})} inputBg={inputBg} darkMode={darkMode} />
-                            <InputField label="CO₂ Saved/yr (e.g. 48 Tonnes)" value={projectForm.co2Saved} onChange={(e) => setProjectForm({...projectForm, co2Saved: e.target.value})} inputBg={inputBg} darkMode={darkMode} />
+                            <InputField label="COâ‚‚ Saved/yr (e.g. 48 Tonnes)" value={projectForm.co2Saved} onChange={(e) => setProjectForm({...projectForm, co2Saved: e.target.value})} inputBg={inputBg} darkMode={darkMode} />
                           </div>
                         </div>
 
                         {/* Tier Pricing Section */}
-                        <div className={`p-4 ${darkMode ? 'bg-[#0B2C21]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-3`}>
-                          <span className={`text-[9px] font-bold uppercase tracking-wider ${textSecondary}`}>Tier Pricing (₹)</span>
+                        <div className={`p-4 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-3`}>
+                          <span className={`text-[9px] font-bold uppercase tracking-wider ${textSecondary}`}>Tier Pricing (â‚¹)</span>
                           <div className="grid grid-cols-3 gap-3">
                             <InputField label="Silver Price" type="number" value={projectForm.silverPrice} onChange={(e) => setProjectForm({...projectForm, silverPrice: e.target.value})} inputBg={inputBg} darkMode={darkMode} />
                             <InputField label="Gold Price" type="number" value={projectForm.goldPrice} onChange={(e) => setProjectForm({...projectForm, goldPrice: e.target.value})} inputBg={inputBg} darkMode={darkMode} />
@@ -1414,12 +1414,12 @@ export default function AdminDashboard() {
                         <div>
                           <label className={`text-[10px] font-bold uppercase ${textSecondary} block mb-1`}>Description</label>
                           <textarea value={projectForm.description} onChange={(e) => setProjectForm({...projectForm, description: e.target.value})} rows={2}
-                            className={`w-full px-3.5 py-2.5 rounded-xl ${inputBg} border ${darkMode ? 'border-white/10' : 'border-slate-200'} text-xs font-semibold text-white focus:outline-none focus:border-[#74E61F] resize-none`} placeholder="Brief project description..." />
+                            className={`w-full px-3.5 py-2.5 rounded-xl ${inputBg} border ${darkMode ? 'border-[#B7E4C7]' : 'border-slate-200'} text-xs font-semibold text-white focus:outline-none focus:border-[#74E61F] resize-none`} placeholder="Brief project description..." />
                         </div>
                         <InputField label="Image URL (optional)" value={projectForm.imageUrl} onChange={(e) => setProjectForm({...projectForm, imageUrl: e.target.value})} inputBg={inputBg} darkMode={darkMode} />
                         <label className="flex items-center space-x-3 cursor-pointer">
                           <input type="checkbox" checked={projectForm.isActive} onChange={(e) => setProjectForm({...projectForm, isActive: e.target.checked})}
-                            className="w-4 h-4 rounded bg-[#0B3022] border border-white/10 accent-[#74E61F]" />
+                            className="w-4 h-4 rounded bg-[#0B3022] border border-[#B7E4C7] accent-[#74E61F]" />
                           <span className={`text-xs font-semibold ${textPrimary}`}>Set as active project (visible on landing page)</span>
                         </label>
                         <div className="flex gap-3 pt-4 border-t ${cardBorder}">
@@ -1437,7 +1437,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* ════════════════ REPORTS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• REPORTS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'reports' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-6`}>
                 <div>
@@ -1491,7 +1491,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* ════════════════ WAITLIST ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• WAITLIST â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'waitlist' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-6`}>
                 <div>
@@ -1499,7 +1499,7 @@ export default function AdminDashboard() {
                   <p className={`text-xs mt-1 ${textSecondary}`}>Manage user signup waitlist</p>
                 </div>
 
-                <form onSubmit={handleAddToWaitlist} className={`p-6 ${darkMode ? 'bg-[#0B2C21]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-4`}>
+                <form onSubmit={handleAddToWaitlist} className={`p-6 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-4`}>
                   <h4 className={`text-sm font-bold font-sora ${textPrimary} uppercase tracking-wider`}>Add to Waitlist</h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <InputField label="Name" value={waitlistForm.name} onChange={(e) => setWaitlistForm({...waitlistForm, name: e.target.value})} inputBg={inputBg} darkMode={darkMode} />
@@ -1521,7 +1521,7 @@ export default function AdminDashboard() {
                   </button>
                 </form>
 
-                <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#031F15]/30' : 'bg-white'}">
+                <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#F7FBF9]' : 'bg-white'}">
                   <table className="w-full text-left border-collapse">
                     <thead>
                       <tr className={`border-b ${cardBorder} text-[9px] font-extrabold uppercase ${textSecondary} tracking-wider`}>
@@ -1536,10 +1536,10 @@ export default function AdminDashboard() {
                     </thead>
                     <tbody className="divide-y ${cardBorder} text-xs font-medium">
                       {waitlist.map((entry) => (
-                        <tr key={entry.id} className={`${darkMode ? 'hover:bg-white/5 text-slate-300' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
+                        <tr key={entry.id} className={`${darkMode ? 'hover:bg-white/5 text-[#2D3748]' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
                           <td className={`p-4 font-bold ${textPrimary}`}>{entry.name}</td>
                           <td className={`p-4 ${textSecondary}`}>{entry.email}</td>
-                          <td className="p-4">{entry.phone || '—'}</td>
+                          <td className="p-4">{entry.phone || 'â€”'}</td>
                           <td className="p-4">{entry.preferredPlan}</td>
                           <td className="p-4">
                             <select value={entry.status || 'Pending'} onChange={(e) => handleWaitlistStatus(entry.id, e.target.value)}
@@ -1570,7 +1570,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* ════════════════ ACTIVITY LOGS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• ACTIVITY LOGS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'logs' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-6`}>
                 <div className="flex justify-between items-start">
@@ -1590,12 +1590,12 @@ export default function AdminDashboard() {
                       ['Action', 'Details', 'User', 'Timestamp']
                     );
                   }}
-                    className="px-4 py-2.5 rounded-2xl bg-[#0B2C21] border border-white/5 text-slate-300 hover:bg-[#74E61F] hover:text-[#042A1d] transition-all text-xs font-bold uppercase cursor-pointer flex items-center gap-2">
+                    className="px-4 py-2.5 rounded-2xl bg-[#F7FBF9] border border-[#B7E4C7] text-[#2D3748] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all text-xs font-bold uppercase cursor-pointer flex items-center gap-2">
                     <Download className="w-3.5 h-3.5" /> Export
                   </button>
                 </div>
 
-                <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#031F15]/30' : 'bg-white'}">
+                <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#F7FBF9]' : 'bg-white'}">
                   <table className="w-full text-left border-collapse">
                     <thead>
                       <tr className={`border-b ${cardBorder} text-[9px] font-extrabold uppercase ${textSecondary} tracking-wider`}>
@@ -1607,11 +1607,11 @@ export default function AdminDashboard() {
                     </thead>
                     <tbody className="divide-y ${cardBorder} text-xs font-medium">
                       {activityLogs.map((log) => (
-                        <tr key={log.id} className={`${darkMode ? 'hover:bg-white/5 text-slate-300' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
+                        <tr key={log.id} className={`${darkMode ? 'hover:bg-white/5 text-[#2D3748]' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
                           <td className="p-4">
                             <span className={`px-2 py-0.5 rounded text-[10px] font-bold bg-[#74E61F]/10 text-[#74E61F] border border-[#74E61F]/20`}>{log.action}</span>
                           </td>
-                          <td className={`p-4 ${textSecondary}`}>{log.details || '—'}</td>
+                          <td className={`p-4 ${textSecondary}`}>{log.details || 'â€”'}</td>
                           <td className={`p-4 font-bold ${textPrimary}`}>{log.userName || 'System'}</td>
                           <td className={`p-4 ${textSecondary}`}>
                             {log.timestamp?.toDate ? new Date(log.timestamp.toDate()).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'N/A'}
@@ -1634,24 +1634,24 @@ export default function AdminDashboard() {
   );
 }
 
-// ─── SUB-COMPONENTS ────────────────────────────────────────────────────
+// â”€â”€â”€ SUB-COMPONENTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function StatCard({ icon, label, value, color, bgColor, borderColor }) {
   return (
-    <div className="p-6 bg-[#042118]/80 rounded-3xl border border-white/5 relative overflow-hidden">
+    <div className="p-6 bg-white rounded-3xl border border-[#B7E4C7] relative overflow-hidden" style={{ boxShadow: '0 2px 12px rgba(27,67,50,0.07)' }}>
       <div className={`w-10 h-10 rounded-2xl ${bgColor} flex items-center justify-center ${color} mb-4 border ${borderColor}`}>{icon}</div>
-      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">{label}</span>
-      <div className="text-3xl font-extrabold font-sora text-white">{value}</div>
+      <span className="text-[10px] font-bold text-[#40916C] uppercase tracking-widest block mb-1">{label}</span>
+      <div className="text-3xl font-extrabold font-sora text-[#1B4332]">{value}</div>
     </div>
   );
 }
 
 function PoolCard({ label, pool, count, share }) {
   return (
-    <div className="p-4 bg-[#031F15]/60 rounded-xl border border-white/5 space-y-2">
-      <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{label}</span>
-      <div className="text-lg font-bold text-white">{formatRupee(pool)}</div>
-      <div className="text-xs text-slate-400">Members: {count}</div>
-      <div className="text-xs font-bold text-[#74E61F]">Share: {formatRupee(share)}</div>
+    <div className="p-4 bg-[#F7FBF9] rounded-xl border border-[#B7E4C7] space-y-2">
+      <span className="text-[10px] text-[#40916C] font-bold uppercase tracking-wider">{label}</span>
+      <div className="text-lg font-bold text-[#1B4332]">{formatRupee(pool)}</div>
+      <div className="text-xs text-[#40916C]">Members: {count}</div>
+      <div className="text-xs font-bold text-[#40916C]">Share: {formatRupee(share)}</div>
     </div>
   );
 }
@@ -1659,9 +1659,9 @@ function PoolCard({ label, pool, count, share }) {
 function InputField({ label, type = 'text', value, onChange, inputBg, darkMode }) {
   return (
     <div className="space-y-1">
-      <label className={`text-[10px] font-bold uppercase ${darkMode ? 'text-slate-400' : 'text-slate-500'} block`}>{label}</label>
+      <label className="text-[10px] font-bold uppercase text-[#1B4332] block">{label}</label>
       <input type={type} value={value} onChange={onChange}
-        className={`w-full px-3.5 py-2.5 rounded-xl ${inputBg} border ${darkMode ? 'border-white/10' : 'border-slate-200'} text-xs font-semibold text-white focus:outline-none focus:border-[#74E61F] transition-colors`} />
+        className={`w-full px-3.5 py-2.5 rounded-xl ${inputBg || 'bg-[#F7FBF9]'} border border-[#B7E4C7] text-xs font-semibold text-[#2D3748] focus:outline-none focus:border-[#40916C] transition-colors`} />
     </div>
   );
 }
@@ -1669,9 +1669,9 @@ function InputField({ label, type = 'text', value, onChange, inputBg, darkMode }
 function SelectField({ label, value, onChange, options, inputBg, darkMode }) {
   return (
     <div className="space-y-1">
-      <label className={`text-[10px] font-bold uppercase ${darkMode ? 'text-slate-400' : 'text-slate-500'} block`}>{label}</label>
+      <label className="text-[10px] font-bold uppercase text-[#1B4332] block">{label}</label>
       <select value={value} onChange={onChange}
-        className={`w-full px-3 py-2 rounded-xl ${inputBg} border ${darkMode ? 'border-white/10' : 'border-slate-200'} text-xs font-semibold text-white focus:outline-none`}>
+        className={`w-full px-3 py-2 rounded-xl ${inputBg || 'bg-[#F7FBF9]'} border border-[#B7E4C7] text-xs font-semibold text-[#2D3748] focus:outline-none`}>
         {options.map(opt => <option key={opt} value={opt}>{opt || 'None'}</option>)}
       </select>
     </div>
@@ -1679,14 +1679,14 @@ function SelectField({ label, value, onChange, options, inputBg, darkMode }) {
 }
 
 function ControlCard({ icon, title, description, action, color, count }) {
-  const colors = { emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500 hover:text-white', amber: 'bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500 hover:text-white', red: 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500 hover:text-white' };
+  const colors = { emerald: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20 hover:bg-emerald-500 hover:text-white', amber: 'bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500 hover:text-white', red: 'bg-red-500/10 text-red-600 border-red-500/20 hover:bg-red-500 hover:text-white' };
   return (
-    <div className="p-6 bg-[#0B2C21] border border-white/5 rounded-2xl space-y-4">
+    <div className="p-6 bg-white border border-[#B7E4C7] rounded-2xl space-y-4" style={{ boxShadow: '0 2px 8px rgba(27,67,50,0.07)' }}>
       <div className={`w-12 h-12 rounded-2xl ${colors[color].split(' ')[0]} flex items-center justify-center ${colors[color].split(' ')[1]} border ${colors[color].split(' ')[2]}`}>{icon}</div>
-      <h4 className="text-sm font-bold font-sora text-white">{title}</h4>
-      <p className="text-xs text-slate-400">{description}</p>
+      <h4 className="text-sm font-bold font-sora text-[#1B4332]">{title}</h4>
+      <p className="text-xs text-[#40916C]">{description}</p>
       <div className="flex items-center justify-between">
-        <span className="text-xs text-slate-500">{count} members</span>
+        <span className="text-xs text-[#40916C]">{count} members</span>
         <button onClick={action} className={`px-4 py-2 rounded-xl ${colors[color]} transition-all text-[10px] font-bold uppercase tracking-wider cursor-pointer`}>
           Run
         </button>
@@ -1697,7 +1697,7 @@ function ControlCard({ icon, title, description, action, color, count }) {
 
 function StatBadge({ label, value, color }) {
   return (
-    <div className={`p-4 bg-[#042118] border border-white/5 rounded-xl text-center`}>
+    <div className={`p-4 bg-white border border-[#B7E4C7] rounded-xl text-center`}>
       <span className={`text-lg font-bold font-sora block ${color}`}>{value}</span>
       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{label}</span>
     </div>
@@ -1706,17 +1706,18 @@ function StatBadge({ label, value, color }) {
 
 function ReportCard({ title, description, onExport, count, icon }) {
   return (
-    <div className="p-6 bg-[#042118]/80 border border-white/5 rounded-2xl space-y-4">
-      <div className="w-10 h-10 rounded-2xl bg-[#74E61F]/10 flex items-center justify-center text-[#74E61F] border border-[#74E61F]/10">{icon}</div>
-      <h4 className="text-sm font-bold font-sora text-white">{title}</h4>
-      <p className="text-xs text-slate-400">{description}</p>
-      <div className="flex items-center justify-between pt-2 border-t border-white/5">
+    <div className="p-6 bg-white border border-[#B7E4C7] rounded-2xl space-y-4" style={{ boxShadow: '0 2px 8px rgba(27,67,50,0.07)' }}>
+      <div className="w-10 h-10 rounded-2xl bg-[#D8F3DC] flex items-center justify-center text-[#1B4332] border border-[#B7E4C7]">{icon}</div>
+      <h4 className="text-sm font-bold font-sora text-[#1B4332]">{title}</h4>
+      <p className="text-xs text-[#40916C]">{description}</p>
+      <div className="flex items-center justify-between pt-2 border-t border-[#B7E4C7]">
         <span className="text-xs text-slate-500">{count} records</span>
         <button onClick={onExport}
-          className="px-4 py-2 rounded-xl bg-[#0B2C21] border border-white/5 text-slate-300 hover:bg-[#74E61F] hover:text-[#042A1d] transition-all text-[10px] font-bold uppercase tracking-wider cursor-pointer flex items-center gap-1.5">
+          className="px-4 py-2 rounded-xl bg-[#F7FBF9] border border-[#B7E4C7] text-[#2D3748] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all text-[10px] font-bold uppercase tracking-wider cursor-pointer flex items-center gap-1.5">
           <Download className="w-3 h-3" /> Export
         </button>
       </div>
     </div>
   );
 }
+

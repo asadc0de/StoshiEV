@@ -7,7 +7,7 @@ import { collection, query, where, orderBy, getDocs, onSnapshot, doc } from 'fir
 import {
   LayoutDashboard, User, Compass, Award, History, Bell, LogOut,
   Menu, X, Check, Info, Gift, Wallet, Leaf, Shield, ChevronRight,
-  Download, ArrowUpRight, Phone, Mail, Sparkles, Lock, Sun, Moon,
+  Download, ArrowUpRight, Phone, Mail, Sparkles, Lock,
   BarChart3, TrendingUp, DollarSign, Clock, Copy, ExternalLink,
   Calendar, Filter, Search, Settings, FileText, Eye, EyeOff, Share2
 } from 'lucide-react';
@@ -23,7 +23,7 @@ const formatRupee = (value) => {
 
 const getUserBadge = (planType) => {
   const map = {
-    Silver: { badge: 'Silver Member', class: 'bg-slate-400/20 text-slate-300 border-slate-500/20' },
+    Silver: { badge: 'Silver Member', class: 'bg-slate-400/20 text-[#2D3748] border-slate-500/20' },
     Gold: { badge: 'Pioneer Member', class: 'bg-[#74E61F]/20 text-[#74E61F] border-[#74E61F]/20' },
     Platinum: { badge: 'Elite Partner', class: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/20' }
   };
@@ -34,14 +34,14 @@ const planAmounts = { Silver: 7000, Gold: 15000, Platinum: 30000 };
 
 function PoolCard({ title, amount, icon, color, locked }) {
   return (
-    <div className={`p-5 bg-[#0B2C21] rounded-2xl border border-white/5 relative overflow-hidden ${locked ? 'opacity-50' : ''}`}>
+    <div className={`p-5 bg-[#F7FBF9] rounded-2xl border border-[#B7E4C7] relative overflow-hidden ${locked ? 'opacity-50' : ''}`}>
       <div className="flex items-center justify-between mb-3">
         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{title}</span>
         <div className={`w-8 h-8 rounded-xl ${color.split(' ')[0]} flex items-center justify-center ${color.split(' ')[1]} border ${color.split(' ')[2]}`}>{icon}</div>
       </div>
       <span className={`text-xl font-black font-sora ${color.split(' ')[1]}`}>{formatRupee(amount || 0)}</span>
       {locked && (
-        <div className="absolute inset-0 bg-[#042118]/80 flex flex-col items-center justify-center backdrop-blur-sm z-10 text-center rounded-2xl">
+        <div className="absolute inset-0 bg-white flex flex-col items-center justify-center backdrop-blur-sm z-10 text-center rounded-2xl">
           <Lock className="w-5 h-5 text-slate-400 mb-1" />
           <span className="text-[10px] font-bold text-white uppercase">Upgrade to unlock</span>
         </div>
@@ -52,7 +52,7 @@ function PoolCard({ title, amount, icon, color, locked }) {
 
 function RewardCard({ title, amount, icon, color, locked }) {
   return (
-    <div className={`p-5 bg-[#0B2C21] rounded-2xl border border-white/5 relative overflow-hidden ${locked ? 'opacity-50' : ''}`}>
+    <div className={`p-5 bg-[#F7FBF9] rounded-2xl border border-[#B7E4C7] relative overflow-hidden ${locked ? 'opacity-50' : ''}`}>
       <div className="flex items-center justify-between mb-3">
         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{title}</span>
         <div className={`w-8 h-8 rounded-xl ${color.split(' ')[0]} flex items-center justify-center ${color.split(' ')[1]} border ${color.split(' ')[2]}`}>{icon}</div>
@@ -60,7 +60,7 @@ function RewardCard({ title, amount, icon, color, locked }) {
       <span className={`text-xl font-black font-sora ${color.split(' ')[1]}`}>{formatRupee(amount || 0)}</span>
       <p className="text-[9px] text-slate-500 mt-1 font-semibold">Reward Accrued</p>
       {locked && (
-        <div className="absolute inset-0 bg-[#042118]/80 flex flex-col items-center justify-center backdrop-blur-sm z-10 text-center rounded-2xl">
+        <div className="absolute inset-0 bg-white flex flex-col items-center justify-center backdrop-blur-sm z-10 text-center rounded-2xl">
           <Lock className="w-5 h-5 text-slate-400 mb-1" />
           <span className="text-[10px] font-bold text-white uppercase">Upgrade to unlock</span>
         </div>
@@ -71,11 +71,11 @@ function RewardCard({ title, amount, icon, color, locked }) {
 
 function NotificationItem({ icon, title, desc, time, color }) {
   return (
-    <div className="p-4 bg-[#0B2C21] rounded-2xl border border-white/5 flex items-start space-x-3">
+    <div className="p-4 bg-[#F7FBF9] rounded-2xl border border-[#B7E4C7] flex items-start space-x-3">
       <div className={`w-8 h-8 rounded-full ${color} flex items-center justify-center shrink-0 border border-[#74E61F]/15`}>{icon}</div>
       <div className="flex-1 min-w-0">
         <h4 className="text-xs font-bold text-white uppercase tracking-wider">{title}</h4>
-        <p className="text-[11px] text-slate-300 font-medium mt-1 leading-relaxed">{desc}</p>
+        <p className="text-[11px] text-[#2D3748] font-medium mt-1 leading-relaxed">{desc}</p>
         <span className="text-[9px] text-slate-500 mt-1.5 block">{time}</span>
       </div>
     </div>
@@ -88,7 +88,6 @@ export default function UserDashboard() {
 
   const [activeTab, setActiveTab] = useState('overview');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(true);
 
   const [profileForm, setProfileForm] = useState({ name: '', phone: '', address: '' });
   const [profileStatus, setProfileStatus] = useState({ success: false, error: '' });
@@ -331,26 +330,28 @@ export default function UserDashboard() {
     { id: 'settings', name: 'Settings', icon: Settings }
   ];
 
-  const bg = darkMode ? 'bg-[#021811]' : 'bg-slate-100';
-  const cardBg = darkMode ? 'bg-[#042118]/80' : 'bg-white';
-  const cardBorder = darkMode ? 'border-white/5' : 'border-slate-200';
-  const textPrimary = darkMode ? 'text-white' : 'text-slate-800';
-  const textSecondary = darkMode ? 'text-slate-400' : 'text-slate-500';
-  const inputBg = darkMode ? 'bg-[#0B3022]/60' : 'bg-slate-100';
+  const bg = 'bg-[#F7FBF9]';
+  const cardBg = 'bg-white';
+  const cardBorder = 'border-[#B7E4C7]';
+  const textPrimary = 'text-[#1B4332]';
+  const textSecondary = 'text-[#40916C]';
+  const inputBg = 'bg-[#F7FBF9]';
+  // Light mode is always on â€” darkMode kept as false so existing ternaries resolve correctly
+  const darkMode = false;
 
   return (
     <div className={`min-h-screen ${bg} ${textPrimary} flex font-inter transition-colors duration-300 relative`}>
-      <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#74E61F]/5 rounded-full blur-[150px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-[20%] w-[50%] h-[50%] bg-[#105D3D]/10 rounded-full blur-[150px] pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#D8F3DC] rounded-full blur-[150px] pointer-events-none opacity-50" />
+      <div className="absolute bottom-0 left-[20%] w-[50%] h-[50%] bg-[#B7E4C7] rounded-full blur-[150px] pointer-events-none opacity-30" />
 
       <div className="lg:hidden fixed top-4 right-4 z-50">
         <button onClick={() => setSidebarOpen(!sidebarOpen)}
-          className={`p-3 ${darkMode ? 'bg-[#042A1d] border-white/10' : 'bg-white border-slate-200'} border rounded-2xl text-[#74E61F] cursor-pointer shadow-lg`}>
+          className="p-3 bg-white border border-[#B7E4C7] rounded-2xl text-[#40916C] cursor-pointer" style={{ boxShadow: '0 2px 12px rgba(27,67,50,0.10)' }}>
           {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
-      <aside className={`fixed inset-y-0 left-0 z-40 w-72 ${darkMode ? 'bg-[#041E15]/95 border-white/5' : 'bg-white border-slate-200'} backdrop-blur-md border-r p-6 flex flex-col justify-between transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed inset-y-0 left-0 z-40 w-72 bg-[#D8F3DC] border-r border-[#B7E4C7] p-6 flex flex-col justify-between transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="space-y-8">
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => navigate('/')}>
             <img src="/stoshi_logo.webp" alt="Stoshi" className="h-12 w-auto" />
@@ -359,16 +360,16 @@ export default function UserDashboard() {
             </div>
           </div>
 
-          <div className={`flex items-center space-x-3 p-4 ${darkMode ? 'bg-[#0B2C21]/60' : 'bg-slate-50'} rounded-2xl border ${cardBorder}`}>
+          <div className="flex items-center space-x-3 p-4 bg-white rounded-2xl border border-[#B7E4C7]" style={{ boxShadow: '0 2px 8px rgba(27,67,50,0.06)' }}>
             <div className="relative">
-              <div className={`w-10 h-10 rounded-full ${darkMode ? 'bg-[#105D3D]' : 'bg-[#74E61F]/20'} text-[#74E61F] flex items-center justify-center font-bold text-sm font-sora shadow-inner`}>
+              <div className="w-10 h-10 rounded-full bg-[#40916C] text-white flex items-center justify-center font-bold text-sm font-sora shadow-inner">
                 {userData?.name ? userData.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : 'U'}
               </div>
-              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#041E15] rounded-full"></span>
+              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full" />
             </div>
             <div className="overflow-hidden">
-              <span className={`text-xs font-bold block truncate ${textPrimary}`}>{userData?.name || 'User'}</span>
-              <span className={`px-2 py-0.5 mt-1 rounded text-[9px] font-extrabold font-sora uppercase border inline-block ${badgeInfo.class}`}>{badgeInfo.badge}</span>
+              <span className="text-xs font-bold block truncate text-[#1B4332]">{userData?.name || 'User'}</span>
+              <span className="px-2 py-0.5 mt-1 rounded text-[9px] font-extrabold font-sora uppercase border inline-block bg-[#D8F3DC] text-[#1B4332] border-[#B7E4C7]">{badgeInfo.badge}</span>
             </div>
           </div>
 
@@ -378,7 +379,11 @@ export default function UserDashboard() {
               const isActive = activeTab === item.id;
               return (
                 <button key={item.id} onClick={() => { setActiveTab(item.id); setSidebarOpen(false); }}
-                  className={`w-full px-4 py-3 rounded-2xl flex items-center space-x-3.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${isActive ? 'bg-[#74E61F]/15 border border-[#74E61F]/20 text-[#74E61F] font-extrabold' : `${darkMode ? 'text-slate-400 hover:text-white hover:bg-[#07241A]/50' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'} border border-transparent`}`}>
+                  className={`w-full px-4 py-3 rounded-2xl flex items-center space-x-3.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
+                    isActive
+                      ? 'bg-[#1B4332] text-white border border-[#1B4332]'
+                      : 'text-[#40916C] hover:text-[#1B4332] hover:bg-[#B7E4C7] border border-transparent'
+                  }`}>
                   <Icon className="w-4 h-4" />
                   <span>{item.name}</span>
                 </button>
@@ -388,13 +393,8 @@ export default function UserDashboard() {
         </div>
 
         <div className="space-y-3">
-          <button onClick={() => setDarkMode(!darkMode)}
-            className={`w-full px-4 py-3 border ${cardBorder} ${darkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-slate-800'} rounded-2xl flex items-center justify-center space-x-2 text-xs font-bold uppercase tracking-wider transition-all`}>
-            {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
-          </button>
           <button onClick={handleLogout}
-            className="w-full px-4 py-3 bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 hover:text-white rounded-2xl flex items-center space-x-3.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
+            className="w-full px-4 py-3 bg-red-50 border border-red-200 text-red-600 hover:bg-red-100 rounded-2xl flex items-center space-x-3.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
             <LogOut className="w-4 h-4" />
             <span>Logout</span>
           </button>
@@ -405,7 +405,7 @@ export default function UserDashboard() {
         <AnimatePresence mode="wait">
           <motion.div key={activeTab} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.3 }} className="space-y-8">
 
-            {/* ════════════════ DASHBOARD / OVERVIEW ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• DASHBOARD / OVERVIEW â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'overview' && (
               <div className="space-y-8">
                 <div className={`flex flex-col md:flex-row justify-between items-start md:items-center ${cardBg} p-6 rounded-[32px] border ${cardBorder} backdrop-blur-sm`}>
@@ -415,10 +415,10 @@ export default function UserDashboard() {
                       <Check className="w-5 h-5 text-emerald-400 ml-2 border border-emerald-400/20 rounded-full bg-emerald-500/10 p-0.5 shrink-0" />
                     </h2>
                     <p className={`text-xs font-semibold mt-1 ${textSecondary}`}>
-                      Member ID: {memberId} • Joined {joinDate ? joinDate.toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A'}
+                      Member ID: {memberId} â€¢ Joined {joinDate ? joinDate.toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A'}
                     </p>
                   </div>
-                  <div className="mt-4 md:mt-0 px-4 py-3 bg-[#0B2C21] rounded-2xl border border-white/5 flex items-center space-x-3">
+                  <div className="mt-4 md:mt-0 px-4 py-3 bg-[#F7FBF9] rounded-2xl border border-[#B7E4C7] flex items-center space-x-3">
                     <div className="w-2.5 h-2.5 bg-[#74E61F] rounded-full animate-pulse"></div>
                     <div>
                       <span className={`text-[10px] font-bold uppercase tracking-widest block ${textSecondary}`}>Active Project</span>
@@ -438,7 +438,7 @@ export default function UserDashboard() {
                 {/* Membership Package Card */}
                 <div className={`${cardBg} border ${cardBorder} rounded-[32px] p-6`}>
                   <h3 className={`text-sm font-bold font-sora ${textPrimary} uppercase tracking-wider mb-4`}>Membership Package</h3>
-                  <div className={`bg-gradient-to-br ${currentPlan === 'Silver' ? 'from-slate-700 to-slate-900' : currentPlan === 'Gold' ? 'from-emerald-950 to-[#042A1d]' : 'from-slate-900 via-cyan-950 to-[#042A1d] border-cyan-500/10'} rounded-[24px] p-6 border border-white/10`}>
+                  <div className={`bg-gradient-to-br ${currentPlan === 'Silver' ? 'from-slate-700 to-slate-900' : currentPlan === 'Gold' ? 'from-emerald-950 to-[#042A1d]' : 'from-slate-900 via-cyan-950 to-[#042A1d] border-cyan-500/10'} rounded-[24px] p-6 border border-[#B7E4C7]`}>
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         <span className={`px-2 py-0.5 rounded text-[9px] font-extrabold font-sora uppercase border inline-block ${badgeInfo.class}`}>{badgeInfo.badge}</span>
@@ -470,17 +470,17 @@ export default function UserDashboard() {
                     <h3 className={`text-sm font-bold font-sora ${textPrimary} uppercase tracking-wider`}>Quick Actions</h3>
                     <div className="space-y-2">
                       <button onClick={() => setActiveTab('earnings')}
-                        className="w-full p-3 bg-[#0B2C21] hover:bg-[#74E61F] hover:text-[#042A1d] transition-all rounded-2xl border border-white/5 flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-300 cursor-pointer">
+                        className="w-full p-3 bg-[#F7FBF9] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all rounded-2xl border border-[#B7E4C7] flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#2D3748] cursor-pointer">
                         <span className="flex items-center space-x-2"><Sparkles className="w-4 h-4" /><span>View Earnings</span></span>
                         <ChevronRight className="w-4 h-4" />
                       </button>
                       <button onClick={() => setActiveTab('payments')}
-                        className="w-full p-3 bg-[#0B2C21] hover:bg-[#74E61F] hover:text-[#042A1d] transition-all rounded-2xl border border-white/5 flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-300 cursor-pointer">
+                        className="w-full p-3 bg-[#F7FBF9] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all rounded-2xl border border-[#B7E4C7] flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#2D3748] cursor-pointer">
                         <span className="flex items-center space-x-2"><Wallet className="w-4 h-4" /><span>Payment History</span></span>
                         <ChevronRight className="w-4 h-4" />
                       </button>
                       <button onClick={() => setActiveTab('project')}
-                        className="w-full p-3 bg-[#0B2C21] hover:bg-[#74E61F] hover:text-[#042A1d] transition-all rounded-2xl border border-white/5 flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-300 cursor-pointer">
+                        className="w-full p-3 bg-[#F7FBF9] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all rounded-2xl border border-[#B7E4C7] flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#2D3748] cursor-pointer">
                         <span className="flex items-center space-x-2"><Compass className="w-4 h-4" /><span>Project Progress</span></span>
                         <ChevronRight className="w-4 h-4" />
                       </button>
@@ -499,7 +499,7 @@ export default function UserDashboard() {
               </div>
             )}
 
-            {/* ════════════════ EARNINGS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• EARNINGS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'earnings' && (
               <div className="space-y-8">
                 <div className={`${cardBg} border ${cardBorder} p-8 rounded-[32px]`}>
@@ -527,7 +527,7 @@ export default function UserDashboard() {
                   </div>
 
                   {/* Summary */}
-                  <div className={`p-5 ${darkMode ? 'bg-[#0B2C21]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-3 mb-6`}>
+                  <div className={`p-5 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-3 mb-6`}>
                     <h4 className={`text-xs font-bold font-sora ${textPrimary} uppercase tracking-wider`}>Earnings Summary</h4>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                       <SummaryBadge label="Total Earnings" value={formatRupee(totalEarnings)} color="text-[#74E61F]" />
@@ -539,7 +539,7 @@ export default function UserDashboard() {
 
                   {/* Distribution History */}
                   <h4 className={`text-xs font-bold font-sora ${textPrimary} uppercase tracking-wider mb-3`}>Distribution History</h4>
-                  <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#031F15]/30' : 'bg-white'}">
+                  <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#F7FBF9]' : 'bg-white'}">
                     <table className="w-full text-left border-collapse">
                       <thead>
                         <tr className={`border-b ${cardBorder} text-[9px] font-extrabold uppercase ${textSecondary} tracking-wider`}>
@@ -552,7 +552,7 @@ export default function UserDashboard() {
                       </thead>
                       <tbody className="divide-y ${cardBorder} text-xs font-medium">
                         {distributions.filter(d => d.status === 'locked').map((d) => (
-                          <tr key={d.id} className={`${darkMode ? 'hover:bg-white/5 text-slate-300' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
+                          <tr key={d.id} className={`${darkMode ? 'hover:bg-white/5 text-[#2D3748]' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
                             <td className={`p-4 ${textSecondary}`}>{d.distributedAt?.toDate ? new Date(d.distributedAt.toDate()).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A'}</td>
                             <td className="p-4">
                               {currentPlan === 'Platinum' ? 'Utility + Green + Loyalty' : currentPlan === 'Gold' ? 'Utility + Green' : 'Utility'}
@@ -576,7 +576,7 @@ export default function UserDashboard() {
               </div>
             )}
 
-            {/* ════════════════ PAYMENTS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PAYMENTS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'payments' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-6`}>
                 <div>
@@ -586,9 +586,9 @@ export default function UserDashboard() {
                 {paymentsLoading ? (
                   <div className={`py-10 text-center ${textSecondary} text-xs`}>Loading payments...</div>
                 ) : payments.length === 0 ? (
-                  <div className={`py-12 text-center ${textSecondary} font-semibold border border-dashed border-white/10 rounded-2xl text-xs`}>No transactions found.</div>
+                  <div className={`py-12 text-center ${textSecondary} font-semibold border border-dashed border-[#B7E4C7] rounded-2xl text-xs`}>No transactions found.</div>
                 ) : (
-                  <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#031F15]/30' : 'bg-white'}">
+                  <div className="overflow-x-auto rounded-2xl border ${cardBorder} ${darkMode ? 'bg-[#F7FBF9]' : 'bg-white'}">
                     <table className="w-full text-left border-collapse">
                       <thead>
                         <tr className={`border-b ${cardBorder} text-[10px] font-extrabold uppercase ${textSecondary} tracking-wider`}>
@@ -602,7 +602,7 @@ export default function UserDashboard() {
                       </thead>
                       <tbody className="divide-y ${cardBorder} text-xs font-medium">
                         {payments.map((tx) => (
-                          <tr key={tx.id} className={`${darkMode ? 'hover:bg-white/5 text-slate-300' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
+                          <tr key={tx.id} className={`${darkMode ? 'hover:bg-white/5 text-[#2D3748]' : 'hover:bg-slate-50 text-slate-600'} transition-colors`}>
                             <td className={`p-4 font-mono font-bold uppercase ${textPrimary}`}>{tx.transactionId}</td>
                             <td className="p-4">{tx.plan} Plan</td>
                             <td className="p-4 text-right text-[#74E61F] font-sora font-semibold">{formatRupee(tx.amount)}</td>
@@ -612,7 +612,7 @@ export default function UserDashboard() {
                             </td>
                             <td className="p-4 text-center">
                               <button onClick={() => handleDownloadReceipt(tx)}
-                                className="p-2 bg-[#0B2C21] hover:bg-[#74E61F] hover:text-[#042A1d] transition-all rounded-xl border border-white/5 text-slate-300 cursor-pointer" title="Download Receipt">
+                                className="p-2 bg-[#F7FBF9] hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all rounded-xl border border-[#B7E4C7] text-[#2D3748] cursor-pointer" title="Download Receipt">
                                 <Download className="w-3.5 h-3.5" />
                               </button>
                             </td>
@@ -625,7 +625,7 @@ export default function UserDashboard() {
               </div>
             )}
 
-            {/* ════════════════ PROJECT ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PROJECT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'project' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-8`}>
                 <div>
@@ -649,7 +649,7 @@ export default function UserDashboard() {
                     </div>
                   </div>
                   <div className="lg:col-span-7 space-y-6">
-                    <div className={`p-5 ${darkMode ? 'bg-[#0B2C21]/60' : 'bg-slate-50'} rounded-2xl border ${cardBorder}`}>
+                    <div className={`p-5 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} rounded-2xl border ${cardBorder}`}>
                       <h4 className={`text-sm font-bold font-sora ${textPrimary} mb-3`}>{projectData.location || 'Sonbhadra, Uttar Pradesh'}</h4>
                       <div className="grid grid-cols-2 gap-4">
                         <ProjectStat label="Project Name" value="Sonbhadra EV-1" />
@@ -658,7 +658,7 @@ export default function UserDashboard() {
                         <ProjectStat label="Funding Collected" value={formatRupee(collected)} />
                       </div>
                     </div>
-                    <div className={`p-5 ${darkMode ? 'bg-[#0B2C21]/60' : 'bg-slate-50'} rounded-2xl border ${cardBorder} space-y-3`}>
+                    <div className={`p-5 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} rounded-2xl border ${cardBorder} space-y-3`}>
                       <ProjectStat label="Your Contribution" value={formatRupee(planAmounts[currentPlan] || 15000)} color="text-[#74E61F]" />
                       <div>
                         <div className="flex justify-between text-xs mb-1">
@@ -676,7 +676,7 @@ export default function UserDashboard() {
               </div>
             )}
 
-            {/* ════════════════ BENEFITS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• BENEFITS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'benefits' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-8`}>
                 <div>
@@ -684,7 +684,7 @@ export default function UserDashboard() {
                   <p className={`text-xs mt-1 ${textSecondary}`}>Benefits available with your {currentPlan} package</p>
                 </div>
 
-                <div className={`bg-gradient-to-br ${currentPlan === 'Silver' ? 'from-slate-700 to-slate-900' : currentPlan === 'Gold' ? 'from-emerald-950 to-[#042A1d]' : 'from-slate-900 via-cyan-950 to-[#042A1d]'} rounded-[28px] p-8 border border-white/10 min-h-48 flex flex-col justify-between shadow-2xl relative overflow-hidden`}>
+                <div className={`bg-gradient-to-br ${currentPlan === 'Silver' ? 'from-slate-700 to-slate-900' : currentPlan === 'Gold' ? 'from-emerald-950 to-[#042A1d]' : 'from-slate-900 via-cyan-950 to-[#042A1d]'} rounded-[28px] p-8 border border-[#B7E4C7] min-h-48 flex flex-col justify-between shadow-2xl relative overflow-hidden`}>
                   <div className="absolute top-0 right-0 w-36 h-36 bg-[#74E61F]/5 rounded-full blur-2xl"></div>
                   <div className="flex justify-between items-start relative z-10">
                     <div>
@@ -711,7 +711,7 @@ export default function UserDashboard() {
                           <div className="w-5 h-5 rounded-full bg-[#74E61F]/15 border border-[#74E61F]/20 text-[#74E61F] flex items-center justify-center shrink-0 mt-0.5">
                             <Check className="w-3.5 h-3.5" />
                           </div>
-                          <span className={`${darkMode ? 'text-slate-300' : 'text-slate-600'} font-semibold leading-relaxed`}>{b}</span>
+                          <span className={`${darkMode ? 'text-[#2D3748]' : 'text-slate-600'} font-semibold leading-relaxed`}>{b}</span>
                         </li>
                       ))}
                     </ul>
@@ -742,7 +742,7 @@ export default function UserDashboard() {
               </div>
             )}
 
-            {/* ════════════════ PROFILE ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PROFILE â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'profile' && (
               <div className={`max-w-2xl ${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-8`}>
                 <div>
@@ -751,7 +751,7 @@ export default function UserDashboard() {
                 </div>
 
                 {/* Profile Header */}
-                <div className={`flex items-center space-x-4 p-6 ${darkMode ? 'bg-[#0B2C21]' : 'bg-slate-50'} rounded-2xl border ${cardBorder}`}>
+                <div className={`flex items-center space-x-4 p-6 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} rounded-2xl border ${cardBorder}`}>
                   <div className={`w-16 h-16 rounded-full ${darkMode ? 'bg-[#105D3D]' : 'bg-[#74E61F]/20'} text-[#74E61F] flex items-center justify-center font-bold text-2xl font-sora`}>
                     {userData?.name ? userData.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : 'U'}
                   </div>
@@ -774,7 +774,7 @@ export default function UserDashboard() {
                   <div className="space-y-1.5">
                     <label className={`text-xs font-bold uppercase tracking-wider ${textSecondary}`}>Email (Cannot change)</label>
                     <input type="email" value={currentUser?.email || ''} disabled
-                      className={`w-full px-4 py-3.5 rounded-2xl ${darkMode ? 'bg-[#0B3022]/30' : 'bg-slate-200'} border ${cardBorder} ${textSecondary} text-sm font-semibold cursor-not-allowed`} />
+                      className={`w-full px-4 py-3.5 rounded-2xl ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-200'} border ${cardBorder} ${textSecondary} text-sm font-semibold cursor-not-allowed`} />
                   </div>
                   <InputField label="Phone Number" type="tel" value={profileForm.phone} onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })} inputBg={inputBg} darkMode={darkMode} required />
                   <InputField label="Address" value={profileForm.address} onChange={(e) => setProfileForm({ ...profileForm, address: e.target.value })} inputBg={inputBg} darkMode={darkMode} />
@@ -786,7 +786,7 @@ export default function UserDashboard() {
               </div>
             )}
 
-            {/* ════════════════ NOTIFICATIONS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• NOTIFICATIONS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'notifications' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-6`}>
                 <div>
@@ -806,7 +806,7 @@ export default function UserDashboard() {
                         color="bg-[#74E61F]/10 text-[#74E61F]" />
                     ))
                   ) : (
-                    <NotificationItem icon={<Info className="w-4 h-4" />} title="No Distributions" desc="No distributions have been processed yet." time="—" color="bg-slate-500/10 text-slate-400" />
+                    <NotificationItem icon={<Info className="w-4 h-4" />} title="No Distributions" desc="No distributions have been processed yet." time="â€”" color="bg-slate-500/10 text-slate-400" />
                   )}
                 </div>
 
@@ -827,13 +827,13 @@ export default function UserDashboard() {
                         color="bg-[#74E61F]/10 text-[#74E61F]" />
                     ))
                   ) : (
-                    <NotificationItem icon={<Info className="w-4 h-4" />} title="No Payments" desc="No payment records found." time="—" color="bg-slate-500/10 text-slate-400" />
+                    <NotificationItem icon={<Info className="w-4 h-4" />} title="No Payments" desc="No payment records found." time="â€”" color="bg-slate-500/10 text-slate-400" />
                   )}
                 </div>
               </div>
             )}
 
-            {/* ════════════════ REPORTS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• REPORTS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'reports' && (
               <div className={`${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-6`}>
                 <div>
@@ -884,7 +884,7 @@ export default function UserDashboard() {
               </div>
             )}
 
-            {/* ════════════════ SETTINGS ════════════════ */}
+            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SETTINGS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
             {activeTab === 'settings' && (
               <div className={`max-w-2xl ${cardBg} border ${cardBorder} p-8 md:p-10 rounded-[32px] space-y-8`}>
                 <div>
@@ -893,7 +893,7 @@ export default function UserDashboard() {
                 </div>
 
                 {/* Change Password */}
-                <div className={`p-6 ${darkMode ? 'bg-[#0B2C21]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-4`}>
+                <div className={`p-6 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-4`}>
                   <h4 className={`text-sm font-bold font-sora ${textPrimary} uppercase tracking-wider`}>Change Password</h4>
                   {passwordStatus.success && (
                     <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 rounded-xl text-xs font-semibold">Password changed successfully!</div>
@@ -914,7 +914,7 @@ export default function UserDashboard() {
                 </div>
 
                 {/* Notification Preferences */}
-                <div className={`p-6 ${darkMode ? 'bg-[#0B2C21]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-4`}>
+                <div className={`p-6 ${darkMode ? 'bg-[#F7FBF9]' : 'bg-slate-50'} border ${cardBorder} rounded-2xl space-y-4`}>
                   <h4 className={`text-sm font-bold font-sora ${textPrimary} uppercase tracking-wider`}>Notification Preferences</h4>
                   <div className="space-y-3">
                     <ToggleOption label="Distribution Alerts" enabled={notifPrefs.distributions}
@@ -935,10 +935,10 @@ export default function UserDashboard() {
   );
 }
 
-// ─── SUB-COMPONENTS ────────────────────────────────────────────────────
+// â”€â”€â”€ SUB-COMPONENTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function QuickStat({ icon, label, value, color, bgColor, borderColor }) {
   return (
-    <div className="p-5 bg-[#042118]/80 rounded-3xl border border-white/5 relative overflow-hidden">
+    <div className="p-5 bg-white rounded-3xl border border-[#B7E4C7] relative overflow-hidden">
       <div className={`w-9 h-9 rounded-2xl ${bgColor} flex items-center justify-center ${color} mb-3 border ${borderColor}`}>{icon}</div>
       <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-1">{label}</span>
       <div className={`text-lg font-extrabold font-sora ${color}`}>{value}</div>
@@ -948,7 +948,7 @@ function QuickStat({ icon, label, value, color, bgColor, borderColor }) {
 
 function EarningRow({ label, value, color }) {
   return (
-    <div className="flex justify-between items-center p-2.5 bg-[#0B2C21] rounded-xl border border-white/5">
+    <div className="flex justify-between items-center p-2.5 bg-[#F7FBF9] rounded-xl border border-[#B7E4C7]">
       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{label}</span>
       <span className={`text-xs font-bold font-sora ${color}`}>{value}</span>
     </div>
@@ -957,7 +957,7 @@ function EarningRow({ label, value, color }) {
 
 function SummaryBadge({ label, value, color }) {
   return (
-    <div className="p-3 bg-[#042118] border border-white/5 rounded-xl text-center">
+    <div className="p-3 bg-white border border-[#B7E4C7] rounded-xl text-center">
       <span className={`text-sm font-bold font-sora block ${color}`}>{value}</span>
       <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">{label}</span>
     </div>
@@ -978,21 +978,21 @@ function InputField({ label, type = 'text', value, onChange, inputBg, darkMode, 
     <div className="space-y-1.5">
       <label className={`text-xs font-bold uppercase tracking-wider ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>{label}</label>
       <input type={type} value={value} onChange={onChange}
-        className={`w-full px-4 py-3.5 rounded-2xl ${inputBg} border ${darkMode ? 'border-white/10' : 'border-slate-200'} focus:border-[#74E61F] focus:outline-none text-sm font-semibold text-white transition-colors`} required={required} />
+        className={`w-full px-4 py-3.5 rounded-2xl ${inputBg} border ${darkMode ? 'border-[#B7E4C7]' : 'border-slate-200'} focus:border-[#74E61F] focus:outline-none text-sm font-semibold text-white transition-colors`} required={required} />
     </div>
   );
 }
 
 function ReportCard({ title, description, onExport, count, icon, darkMode }) {
   return (
-    <div className={`p-6 ${darkMode ? 'bg-[#042118]/80' : 'bg-white'} border ${darkMode ? 'border-white/5' : 'border-slate-200'} rounded-2xl space-y-4`}>
+    <div className={`p-6 ${darkMode ? 'bg-white' : 'bg-white'} border ${darkMode ? 'border-[#B7E4C7]' : 'border-slate-200'} rounded-2xl space-y-4`}>
       <div className="w-10 h-10 rounded-2xl bg-[#74E61F]/10 flex items-center justify-center text-[#74E61F] border border-[#74E61F]/10">{icon}</div>
       <h4 className={`text-sm font-bold font-sora ${darkMode ? 'text-white' : 'text-slate-800'}`}>{title}</h4>
       <p className={`text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>{description}</p>
-      <div className={`flex items-center justify-between pt-2 border-t ${darkMode ? 'border-white/5' : 'border-slate-200'}`}>
+      <div className={`flex items-center justify-between pt-2 border-t ${darkMode ? 'border-[#B7E4C7]' : 'border-slate-200'}`}>
         <span className={`text-xs ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>{count}</span>
         <button onClick={onExport}
-          className={`px-4 py-2 rounded-xl ${darkMode ? 'bg-[#0B2C21] border-white/5 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-600'} border hover:bg-[#74E61F] hover:text-[#042A1d] transition-all text-[10px] font-bold uppercase tracking-wider cursor-pointer flex items-center gap-1.5`}>
+          className={`px-4 py-2 rounded-xl ${darkMode ? 'bg-[#F7FBF9] border-[#B7E4C7] text-[#2D3748]' : 'bg-slate-100 border-slate-200 text-slate-600'} border hover:bg-[#D8F3DC] hover:text-[#1B4332] transition-all text-[10px] font-bold uppercase tracking-wider cursor-pointer flex items-center gap-1.5`}>
           <Download className="w-3 h-3" /> Export
         </button>
       </div>
@@ -1003,10 +1003,11 @@ function ReportCard({ title, description, onExport, count, icon, darkMode }) {
 function ToggleOption({ label, enabled, onChange, darkMode }) {
   return (
     <div className="flex items-center justify-between py-2">
-      <span className={`text-xs font-semibold ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>{label}</span>
+      <span className={`text-xs font-semibold ${darkMode ? 'text-[#2D3748]' : 'text-slate-600'}`}>{label}</span>
       <button onClick={onChange} className={`w-10 h-5 rounded-full transition-colors relative ${enabled ? 'bg-[#74E61F]' : 'bg-slate-600'}`}>
         <div className={`w-3.5 h-3.5 bg-white rounded-full absolute top-0.5 transition-transform ${enabled ? 'translate-x-5' : 'translate-x-1'}`} />
       </button>
     </div>
   );
 }
+
